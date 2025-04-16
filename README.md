@@ -7,13 +7,9 @@ which can be expanded to a custom engine, such as [Gly Engine](https://github.co
 
  * [online ide](https://playground.gamely.com.br)
  * [limitations](https://docs.gamely.com.br/limits#limits-in-nintendo-ds)
- * [documentation](https://docs.gamely.com.br/group__homebrew#nintendo_nds)
+ * [documentation](https://docs.gamely.com.br/group__nintendo)
 
 <br/>
-
-| :warning: Attention |
-| :------------------ |
-| there is no sanitization, error handling or observation of resource consumption, all of this takes up precious CPU time, bad code will make the game crash with a black screen.<br><br>**Developing a multiplatform game with desktop support is recommended, especially for testing Lua code!** |
 
 ## Building: [Pong](https://github.com/gamelly/gly-engine/blob/main/samples/pong/game.lua) Example with `Gly Engine`
 
@@ -47,4 +43,4 @@ make -C build
 
 ---
 
-:whale: use [devkitpro/devkitarm](https://hub.docker.com/r/devkitpro/devkitarm) docker image if you do not have [devkitpro](https://devkitpro.org/wiki/devkitPro_pacman) installed.
+:whale: use **devkitpro/devkitarm:20240906** docker [image](https://hub.docker.com/r/devkitpro/devkitarm) if you do not have [devkitpro](https://devkitpro.org/wiki/devkitPro_pacman) installed.
