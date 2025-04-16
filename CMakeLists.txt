@@ -93,8 +93,14 @@ if(NOT EXISTS ${ENGINE_HEADER})
     FetchContent_Populate(dep_engine URL ${ENGINE_DOWNLOAD} SOURCE_DIR ${ENGINE_DIR})
     file(MAKE_DIRECTORY "${ENGINE_DIR}/lite")
     file(MAKE_DIRECTORY "${ENGINE_DIR}/love")
+    file(MAKE_DIRECTORY "${ENGINE_DIR}/micro")
     file(MAKE_DIRECTORY "${ENGINE_DIR}/native")
     file(MAKE_DIRECTORY "${ENGINE_DIR}/samples/template")
+    execute_process(
+        WORKING_DIRECTORY ${ENGINE_DIR}
+        COMMAND ${LUAC} ${ENGINE_CLI} build --core micro --bundler --dist ${ENGINE_DIR}/micro @helloworld
+        COMMAND_ERROR_IS_FATAL ANY
+    )
     execute_process(
         WORKING_DIRECTORY ${ENGINE_DIR}
         COMMAND ${LUAC} ${ENGINE_CLI} build --core lite --bundler --dist ${ENGINE_DIR}/lite @helloworld
