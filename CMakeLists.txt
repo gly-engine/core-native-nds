@@ -111,9 +111,12 @@ if(NOT EXISTS ${ENGINE_HEADER})
         COMMAND ${LUAC} ${ENGINE_CLI} build --core native --bundler --dist ${ENGINE_DIR}/native @helloworld
         COMMAND_ERROR_IS_FATAL ANY
     )
+    if(NOT DEFINED TEMPLATE_SIZE)
+        set(TEMPLATE_SIZE 100000)
+    endif()
     execute_process(
         WORKING_DIRECTORY ${ENGINE_DIR}
-        COMMAND ${LUAC} ${ENGINE_CLI} tool-template-fill ${ENGINE_DIR}/samples/template/game.lua 204800
+        COMMAND ${LUAC} ${ENGINE_CLI} tool-template-fill ${ENGINE_DIR}/samples/template/game.lua ${TEMPLATE_SIZE}
     )
     if (NOT DEFINED ENGINE)
         set(ENGINE "@lite")
