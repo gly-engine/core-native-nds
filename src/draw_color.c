@@ -20,12 +20,12 @@ void draw_cmd_color(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
     }
 
     if (flush_mode) {
-        static const uint32_t *end = (uint32_t *) (0x06000000 + (240 * 160 * 2));
+        static const uint32_t *end = (uint32_t *) (0x6800000 + (256 * 192 * 2));
         static uint16_t old_clear = 0;
         if (old_clear != clear.pixel) {
             draw_color.arr[0] = clear.pixel;
             draw_color.arr[1] = clear.pixel;
-            uint32_t *i = (uint32_t *) 0x06000000;
+            uint32_t *i = (uint32_t *) 0x6800000;
             while (i < end) {
                 *i++ = draw_color.pixel2;
             }
