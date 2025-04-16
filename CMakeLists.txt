@@ -25,18 +25,6 @@ include_directories("${CMAKE_SOURCE_DIR}/vendor")
 set(CMAKE_C_FLAGS "${NDS_ARCH_SETTINGS} ${NDS_COMMON_FLAGS}")
 set(CMAKE_EXE_LINKER_FLAGS "${NDS_LINKER_FLAGS}")
 
-file(GLOB_RECURSE SOURCES "src/*.c")
-add_executable(${PROJECT_NAME} ${SOURCES})
-file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")
-nds_create_rom(${PROJECT_NAME}
-    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/bin/${PROJECT_NAME}.nds"
-    NAME "My Awesome Game"
-    SUBTITLE2 "GlyEngine"
-    SUBTITLE2 "Powered by Gamely"
-    ICON "${DEVKITPRO}/libnds/icon.bmp"
-    ARM7 "${DEVKITPRO}/libnds/default.elf"
-)
-
 # Zig
 set(ZIG_VERSION "0.13.0")
 set(ZIG_DIR "${CMAKE_SOURCE_DIR}/vendor/zig")
@@ -90,17 +78,17 @@ elseif(DEFINED ENGINE AND ENGINE MATCHES "^\\@")
 else()
     set(ENGINE_LOGO 3 CACHE STRING "" FORCE)
 endif()
-target_compile_definitions(${PROJECT_NAME} PRIVATE ENGINE_LOGO=${ENGINE_LOGO})
 
 # Engine
-set(ENGINE_VERSION "0.0.18")
+set(ENGINE_VERSION "0.0.20")
 set(ENGINE_DIR "${CMAKE_SOURCE_DIR}/vendor/engine")
 set(ENGINE_CLI "${ENGINE_DIR}/src/cli/main.lua")
 set(ENGINE_DOWNLOAD "https://github.com/gamelly/gly-engine/archive/refs/tags/${ENGINE_VERSION}.tar.gz")
 set(ENGINE_HEADER "${ENGINE_DIR}/bytecode.h")
+set(ENGINE_LOVE_VERSION "0.0.19")
 set(ENGINE_LOVE_DIR1 "${ENGINE_DIR}/love")
 set(ENGINE_LOVE_DIR2 "${CMAKE_SOURCE_DIR}/vendor/love")
-set(ENGINE_LOVE_DOWNLOAD "https://github.com/gamelly/love-engine/archive/refs/tags/${ENGINE_VERSION}.tar.gz")
+set(ENGINE_LOVE_DOWNLOAD "https://github.com/gamelly/love-engine/archive/refs/tags/${ENGINE_LOVE_VERSION}.tar.gz")
 if(NOT EXISTS ${ENGINE_HEADER})
     FetchContent_Populate(dep_engine URL ${ENGINE_DOWNLOAD} SOURCE_DIR ${ENGINE_DIR})
     file(MAKE_DIRECTORY "${ENGINE_DIR}/lite")
@@ -109,12 +97,12 @@ if(NOT EXISTS ${ENGINE_HEADER})
     file(MAKE_DIRECTORY "${ENGINE_DIR}/samples/template")
     execute_process(
         WORKING_DIRECTORY ${ENGINE_DIR}
-        COMMAND ${LUAC} ${ENGINE_CLI} build --core lite --bundler --dist ${ENGINE_DIR}/lite/
+        COMMAND ${LUAC} ${ENGINE_CLI} build --core lite --bundler --dist ${ENGINE_DIR}/lite @helloworld
         COMMAND_ERROR_IS_FATAL ANY
     )
     execute_process(
         WORKING_DIRECTORY ${ENGINE_DIR}
-        COMMAND ${LUAC} ${ENGINE_CLI} build --core native --bundler --dist ${ENGINE_DIR}/native/
+        COMMAND ${LUAC} ${ENGINE_CLI} build --core native --bundler --dist ${ENGINE_DIR}/native @helloworld
         COMMAND_ERROR_IS_FATAL ANY
     )
     execute_process(
@@ -182,6 +170,19 @@ if(LUA_OPTMIZE)
     )
 endif()
 
+file(GLOB_RECURSE SOURCES "src/*.c")
+add_executable(${PROJECT_NAME} ${SOURCES})
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")
+nds_create_rom(${PROJECT_NAME}
+    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/bin/${PROJECT_NAME}.nds"
+    NAME "My Awesome Game"
+    SUBTITLE2 "GlyEngine"
+    SUBTITLE2 "Powered by Gamely"
+    ICON "${ENGINE_DIR}/assets/icon32x32.bmp"
+    ARM7 "${DEVKITPRO}/libnds/default.elf"
+)
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE ENGINE_LOGO=${ENGINE_LOGO})
 target_link_libraries(${PROJECT_NAME} ${NDS_STANDARD_LIBRARIES})
 target_link_libraries(${PROJECT_NAME} lua-static)
 target_link_libraries(${PROJECT_NAME} m)
