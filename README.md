@@ -1,17 +1,17 @@
 # Core Native NDS
 
-[<img align="right" height="168px" src="https://raw.githubusercontent.com/RodrigoDornelles/RodrigoDornelles/refs/heads/master/media/pong-gba-gly-engine.gif">](#core-native-nds)
+[<img align="right" height="168px" src="https://raw.githubusercontent.com/RodrigoDornelles/RodrigoDornelles/refs/heads/master/media/pong-gba-gly-engine.gif">](https://gly-engine.itch.io/pong)
 
 This project is a basic micro-gameengine to run lua in the **Nintendo DS**,
-which can be expanded to a custom engine, such as [Gly Engine](https://github.com/gamelly/gly-engine) or [Love2d](https://github.com/gamelly/love-engine).
+which can be expanded to a custom engine, such as [Gly Engine](https://github.com/gly-engine/gly-engine) or [Love2d](https://github.com/gly-engine/love-engine).
 
  * [online ide](https://playground.gamely.com.br)
  * [limitations](https://docs.gamely.com.br/limits#limits-in-nintendo-ds)
- * [documentation](https://docs.gamely.com.br/group__nintendo)
+ * [documentation](https://docs.gamely.com.br/nintendo#nds)
 
 <br/>
 
-## Building: [Pong](https://github.com/gamelly/gly-engine/blob/main/samples/pong/game.lua) Example with `Gly Engine`
+## Building: [Pong](https://github.com/gly-engine/gly-engine/blob/main/samples/pong/game.lua) Example with `Gly Engine`
 
 ```sql
 cmake -Bbuild -H. -DGAME=@pong
@@ -21,7 +21,7 @@ cmake -Bbuild -H. -DGAME=@pong
 make -C build
 ```
 
-## Building: [Pong](https://github.com/gamelly/love-engine/blob/main/samples/pong/main.lua) Example with `Love2D`
+## Building: [Pong](https://github.com/gly-engine/love-engine/blob/main/samples/pong/main.lua) Example with `Love2D`
 
 ```sql
 cmake -Bbuild -H. -DGAME=@love:pong -DENGINE=@love
