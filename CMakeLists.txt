@@ -80,7 +80,7 @@ else()
 endif()
 
 # Engine
-set(ENGINE_VERSION "0.0.20")
+set(ENGINE_VERSION "0.0.21")
 set(ENGINE_DIR "${CMAKE_SOURCE_DIR}/vendor/engine")
 set(ENGINE_CLI "${ENGINE_DIR}/src/cli/main.lua")
 set(ENGINE_DOWNLOAD "https://github.com/gamelly/gly-engine/archive/refs/tags/${ENGINE_VERSION}.tar.gz")
@@ -98,17 +98,17 @@ if(NOT EXISTS ${ENGINE_HEADER})
     file(MAKE_DIRECTORY "${ENGINE_DIR}/samples/template")
     execute_process(
         WORKING_DIRECTORY ${ENGINE_DIR}
-        COMMAND ${LUAC} ${ENGINE_CLI} build --core micro --bundler --dist ${ENGINE_DIR}/micro @helloworld
+        COMMAND ${LUAC} ${ENGINE_CLI} build --core micro --bundler --dist ${ENGINE_DIR}/micro ""
         COMMAND_ERROR_IS_FATAL ANY
     )
     execute_process(
         WORKING_DIRECTORY ${ENGINE_DIR}
-        COMMAND ${LUAC} ${ENGINE_CLI} build --core lite --bundler --dist ${ENGINE_DIR}/lite @helloworld
+        COMMAND ${LUAC} ${ENGINE_CLI} build --core lite --bundler --dist ${ENGINE_DIR}/lite ""
         COMMAND_ERROR_IS_FATAL ANY
     )
     execute_process(
         WORKING_DIRECTORY ${ENGINE_DIR}
-        COMMAND ${LUAC} ${ENGINE_CLI} build --core native --bundler --dist ${ENGINE_DIR}/native @helloworld
+        COMMAND ${LUAC} ${ENGINE_CLI} build --core native --bundler --dist ${ENGINE_DIR}/native ""
         COMMAND_ERROR_IS_FATAL ANY
     )
     if(NOT DEFINED TEMPLATE_SIZE)
